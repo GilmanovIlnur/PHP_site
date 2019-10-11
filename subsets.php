@@ -1,6 +1,6 @@
 <?php
 include "main.php";
-class content implements IContent{
+class subsets implements IContent{
     private $num;
 
     function get_title1()
@@ -22,29 +22,41 @@ class content implements IContent{
     <input type="submit" value="Отправить">
 </form>
 HEADER;
-        $this->num = $_POST["number"];
-        $this->find_subsets();
+
+
+        if (isset($_POST["number"])){
+            $this->num = $_POST["number"];
+            $this->find_subsets();
+        }
+
     }
     function find_subsets(){
         $array = [];
-        $subset = [];
         for ($i = 0; $i <= $this->num; $i++){
             $array[$i - 1] = $i;
         }
         for ($i = 0; $i < 2**$this->num; $i++){
+            $subset = [];
             $binary_array = $this->convert_to_binary_system($i);
+            $k =0;
             for ($j = 0; $j < count($binary_array); $j++){
                 if ($binary_array[$j] == 1){
-                    $subset[$j] = $array[$j];
+                    $subset[$k] = $array[$j];
+                    $k++;
                 }
-
             }
-            print_r($subset);
-//            for ($i = 0; $i < count($subset); $i++){
-//                print($subset[$i]);
-//                print("</br>");
-//            }
+            $this->print_subset($subset);
         }
+    }
+    function print_subset($subset){
+        print ("{");
+        for ($i = 0; $i < count($subset); $i++){
+            print($subset[$i]);
+            print (" ");
+        }
+        print ("}");
+        print("</br>");
+
     }
 
     function convert_to_binary_system($number){
@@ -55,16 +67,16 @@ HEADER;
         if ($number != 0){
             while ($number != 1){
                 $array[count($array) - 1 - $h] = $number % 2;
-                $number = (int)$number/2;
+                $number = (int)($number/2);
                 $h += 1;
-                $array[count($array) - $h - 1] = 1;
-                return $array;
             }
+            $array[count($array) - $h - 1] = 1;
+            return $array;
         }else{
             return [];
         }
     }
 }
 
-$p = new main(new content());
+$p = new main(new subsets());
 
