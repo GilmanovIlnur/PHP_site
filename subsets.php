@@ -16,7 +16,8 @@ class subsets implements IContent{
     function show_content()
     {
         print <<< HEADER
-<form action="subsets.php" method="post">
+
+<form name="form" action="subsets.php" method="post" onsubmit="return validateForm()">
     <input type="text" name="number">
     </br>
     <input type="submit" value="Отправить">

@@ -30,6 +30,7 @@ class main
 <!doctype html>
 <html>
 <head>
+<script href="js.js"></script>
 <title>{$this->title1}</title>
 </head><body>
 <div class="title">{$this->title1}</div>
