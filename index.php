@@ -1,6 +1,7 @@
 <?php
 include "main.php";
-include "content.php";
+include "MainPageContent.php";
 
-$p = new main(new content());
+
+$p = new main(new MainPageContent());
 

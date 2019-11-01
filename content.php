@@ -1,5 +1,5 @@
 <?php
-
+include "main.php";
 
 class content implements IContent
 {
@@ -22,12 +22,14 @@ class content implements IContent
 
     function get_title2()
     {
-        return "<h3 style='text-align: center'>Таблица первых 1000 простых чисел</h3>";
+        return "";
     }
 
     function show_content()
     {
-        print "<table style='
+        print "
+        <h3 style='text-align: center'>Таблица первых 1000 простых чисел</h3>
+                    <table style='
                         border-collapse: collapse; 
                         border:solid blue 2px ; 
                         text-align: center; 
@@ -56,3 +58,4 @@ class content implements IContent
     }
 
 }
+$p = new main(new content());

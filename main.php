@@ -19,8 +19,8 @@ class main
     }
 
     private function show_page(){
-        $this->show_menu();
         $this->show_head();
+        $this->show_menu();
         $this->show_content();
         $this->show_footer();
     }
@@ -30,7 +30,9 @@ class main
 <!doctype html>
 <html>
 <head>
-<script href="js.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="css/main.css">
+<script src="js/js.js"></script>
 <title>{$this->title1}</title>
 </head><body>
 <div class="title">{$this->title1}</div>
@@ -39,63 +41,25 @@ HEADER;
 
     }
     private function show_menu(){
-        echo "
-        <style>
-            body{
-                margin: 0;
-                padding: 0;
-            }
-            nav{
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                min-height: 10px;
-                background-color: #454340;
-                font-family: 'Poppins', sans-serif;
-            }
-            .logo{
-                width: 300px;
-                height: 100px;
-                margin-left: 10px;
-                display: flex;
-                align-items: center;
-              
-            }
-            h4{
-                letter-spacing: 5px;
-                font-size: 20px;
-                 color: #ff7c2b;
-            }
-            img{
-                width: 25px;
-                height: 25px;
-            }
-            
-            .links a{
-                background-color: darkgray;
-                font-size: 15px;
-                letter-spacing: 3px;
-                color: rgba(144,5,0,0.98);
-                text-decoration: none;
-                font-weight: bold;
-            }
-           
-            img{
-                width: 25px;
-                height: 25px;
-            }
-           
-        </style>
-
-        <nav>
-            <div class=\"logo\">
-                <img src=\"http://www.tsatu.edu.ua/nauka/wp-content/uploads/sites/49/1466703414.png\" alt=\"\">
+        print <<<HEADER
+        <nav class="menu">
+         
                 <h4>Сайт Ильнура</h4>
-            </div>
+            
             <h4>Добро пожаловать!</h4>
-            <h4><a href='subsets.php'>Подмножества</a></h4>
+            <ul>
+                <li><a href="index.php">Главная страница</a>
+                <li><a href="#">Задачи</a>
+                    <ul class="tasks">
+                        <li><a href="content.php">1000 простых чисел</a></li>
+                        <li><a href="subsets.php">Подмножества</a></li>
+                        <li><a href="Rebus.php">Ребусы</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
         </nav>
-        ";
+HEADER;
 
     }
 
