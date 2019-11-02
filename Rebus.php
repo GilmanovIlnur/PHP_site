@@ -4,9 +4,9 @@ set_time_limit(1000);
 
 class Rebus implements IContent
 {
-    private $permutations = [];
     private $str;
     private $firstLetters = [];
+    private $letters = [];
 
     function get_title1()
     {
@@ -20,27 +20,34 @@ class Rebus implements IContent
 
     function show_content()
     {
-        ?>
-    <form action="Rebus.php" method="get">
-        <input type="text" placeholder="Введите ребус" name="r">
-        </br>
-        <input type="submit" value="Решить">
-    </form>
-        <?php
 
+        ?>
+
+        <div  class="shadow-sm p-3 mb-5 bg-#ECF0F1 rounded" style="text-align: center; padding-top: 30px" class="page">
+            <h5 style="font-family: 'Muli', sans-serif;">Страница, на которой вы можете находить решения математических
+             ребусов. Онлайн калькулятор выведет все решения. </h5>
+            <form name="form" action="Rebus.php" method="get">
+                <input id="inp_R" type="text" value="<?php print $_GET['r'];?>" placeholder="Введите ребус" name="r">
+                <input  class="btn btn-success" type="submit" value="Решить" onclick="fixForm()">
+                <button type="button" class="btn btn-danger" onclick="clearForm()">X</button>
+            </form>
+        </div>
+        <section class="a">
+            <div class="container-fluid">
+                <div class="row">
+
+        <?php
         //$this->generatePermutations(10,10);//n = 10 - количество цифр,  m = количесвтво букв различных.
         if (isset($_GET['r'])){
-            //print (strlen("a"));
             $this->str = $_GET['r'];
             $this->findFirstLetters(preg_split("/[+=-]/", $this->str));
-//            $ma ="8";
-//            $p = eval('return '.$ma.';');
-//            print $p;
-            $letters = $this->parseInput($this->str);
-            print_r($letters);
-            $this->generatePermutations(10,count($letters));
-            $this->findSolution($letters);
-
+            $this->letters = $this->parseInput($this->str);
+            $this->generatePermutations(10,count($this->letters));
+            ?>
+            </div>
+            </div>
+            </section>
+            <?
         }
     }
     function findFirstLetters(array $pr){
@@ -49,44 +56,59 @@ class Rebus implements IContent
                 array_push( $this->firstLetters, $promise{0});
             }
         }
+
     }
 
-    function findSolution(array $letters){
-
-        foreach ($this->permutations as $permutation){
-            $possibleSolution = [];
-            for ($i = 0; $i < count($permutation); $i++){
-                //print_r($permutation);
-                if (($permutation[$i] == 0) and (in_array($letters[$i], $this->firstLetters))){
-                    continue 2;
-                }
-                $possibleSolution[$letters[$i]] = $permutation[$i];
+    function findPossibleSolution(array $permutation){
+        $br = false;
+        $possibleSolution = [];
+        for ($i = 0; $i < count($permutation); $i++){
+            if (($permutation[$i] == 0) and (in_array($this->letters[$i], $this->firstLetters))){
+                $br = true;
+                break;
             }
+            $possibleSolution[$this->letters[$i]] = $permutation[$i];
+        }
+        if (!$br){
             list ($fl, $str) = $this->checkSolution($possibleSolution);
-            if ($fl){
-                print $str;
-                print "</br>";
+            if ($fl and $possibleSolution != []){
+                ?>
+                <div class="col-md-6 col-xl-2 a1" style="
+                        margin: 10px;
+                        padding-top: 10px;
+                        border: brown 2px solid">
+                 <p style="
+                        text-align: center;
+                        @import url('https://fonts.googleapis.com/css?family=McLaren&display=swap';);
+                        font-family: 'McLaren', cursive;">
+                    <? print $str?>
+                </p>
+                </div>
+                <?
             }
         }
     }
 
     function checkSolution(array $possibleSolution){
-        //print_r($possibleSolution);
-        $strc = $this->str;
+        $strCopy = $this->str;
         foreach ($possibleSolution as $key => $value) {
-            $strc = str_replace($key, $value, $strc);
+            $strCopy = str_replace($key, $value, $strCopy);
         }
 
-        $splitted = explode("=", $strc);
-        //print_r($splitted);
-        $l = eval('return '.$splitted[0].';');
-        $p = eval('return '.$splitted[1].';');
-
-            if ((int)$l == (int)$p){
-                return array(true, $strc);
+        $splitted = explode("=", $strCopy);
+        try{
+             $l = eval('return '.$splitted[0].';');
+             $p = eval('return '.$splitted[1].';');
+                if ((int)$l == (int)$p){
+                return array(true, $strCopy);
             }else{
                 return array(false, '');
             }
+        }catch (ParseError $exception){
+            exit("<h3>Проверьте свои введенные данные, скорее всего вы ошиблись.</h3>");
+        }
+
+
     }
 
     function parseInput($str):array
@@ -112,18 +134,11 @@ class Rebus implements IContent
         }
         return false;
     }
-    function printArray(array $arr){
-        foreach ($arr as $elem){
-            print "$elem ";
-        }
-        print "</br>";
-    }
 
     function generatePermutations(int $n, int $m, $prefix = [])
     {
         if ($m == 0){
-            array_push($this->permutations, $prefix);
-            //$this->printArray($prefix);
+            $this->findPossibleSolution($prefix);
             return;
         }
         for ($i = 0; $i < $n; $i++){

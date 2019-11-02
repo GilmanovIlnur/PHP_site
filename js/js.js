@@ -8,3 +8,12 @@ function validateForm() {
         return false;
     }
 }
+function clearForm() {
+    document.forms["form"]["r"].value = "";
+}
+
+function fixForm() {
+    let x = document.forms["form"]["r"].value;
+    x = x.replace(/[ \s0-9,:!&@#$%^()'"]/g, '').toUpperCase().trim()
+    document.forms["form"]["r"].value = x;
+}
