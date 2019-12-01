@@ -1,6 +1,9 @@
 <?php
 include "main.php";
 set_time_limit(1000);
+//дан файл формата .csv   проверяем размер, название, текстовый формат файла
+//enctype = multipart/form-data в форму прописать чтобы загружались файлы
+//fopen(.. , "r-b"); лишний раз пройтись, узнать количество строк. считывать построчно.
 
 class Rebus implements IContent
 {
@@ -23,7 +26,7 @@ class Rebus implements IContent
 
         ?>
 
-        <div  class="shadow-sm p-3 mb-5 bg-#ECF0F1 rounded" style="text-align: center; padding-top: 30px" class="page">
+        <div  class="shadow-sm p-3 mb-5 bg-#ECF0F1 rounded" style="text-align: center; padding-top: 30px">
             <h5 style="font-family: 'Muli', sans-serif;">Страница, на которой вы можете находить решения математических
              ребусов. Онлайн калькулятор выведет все решения. </h5>
             <form name="form" action="Rebus.php" method="get">
@@ -32,6 +35,14 @@ class Rebus implements IContent
                 <button type="button" class="btn btn-danger" onclick="clearForm()">X</button>
             </form>
         </div>
+        <div style="margin-top: -30px;
+                    margin-bottom: 10px;
+                    padding-left: 10px;
+                    @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+                    font-family: 'Pacifico', cursive;">
+            <span id="message"></span>
+        </div>
+
         <section class="a">
             <div class="container-fluid">
                 <div class="row">
@@ -47,6 +58,10 @@ class Rebus implements IContent
             </div>
             </div>
             </section>
+        <script type="text/javascript">
+            let count = document.getElementsByClassName("row")[0].getElementsByTagName("p").length;
+            document.getElementById("message").innerHTML = "Количество решений ребуса - " + count;
+        </script>
             <?
         }
     }
@@ -59,7 +74,7 @@ class Rebus implements IContent
 
     }
 
-    function findPossibleSolution(array $permutation){
+    function checkPossibleSolution(array $permutation){
         $br = false;
         $possibleSolution = [];
         for ($i = 0; $i < count($permutation); $i++){
@@ -70,8 +85,8 @@ class Rebus implements IContent
             $possibleSolution[$this->letters[$i]] = $permutation[$i];
         }
         if (!$br){
-            list ($fl, $str) = $this->checkSolution($possibleSolution);
-            if ($fl and $possibleSolution != []){
+            list ($fl, $str) = $this->checkSolutionWithEval($possibleSolution);
+            if ($fl && $possibleSolution != []){
                 ?>
                 <div class="col-md-6 col-xl-2 a1" style="
                         margin: 10px;
@@ -89,7 +104,7 @@ class Rebus implements IContent
         }
     }
 
-    function checkSolution(array $possibleSolution){
+    function checkSolutionWithEval(array $possibleSolution){
         $strCopy = $this->str;
         foreach ($possibleSolution as $key => $value) {
             $strCopy = str_replace($key, $value, $strCopy);
@@ -113,7 +128,7 @@ class Rebus implements IContent
 
     function parseInput($str):array
     {
-        $str = str_replace([' ', '(', ')', '-', '+', '='], '', $str);
+        $str = str_replace(['-', '+', '='], '', $str);
         $split = preg_split('//', $str, -1, PREG_SPLIT_NO_EMPTY);
 
         $uniqueChars = [];
@@ -122,6 +137,10 @@ class Rebus implements IContent
             if (in_array($v, $uniqueChars))
                 continue;
             array_push($uniqueChars, $v);
+        }
+        if (count($uniqueChars) > 10){
+            $count = count($uniqueChars);
+            exit("<h3 style='color: red'>У вас ребус содержит $count букв, а цифр всего 10.</h3>");
         }
         return $uniqueChars;
     }
@@ -138,7 +157,7 @@ class Rebus implements IContent
     function generatePermutations(int $n, int $m, $prefix = [])
     {
         if ($m == 0){
-            $this->findPossibleSolution($prefix);
+            $this->checkPossibleSolution($prefix);
             return;
         }
         for ($i = 0; $i < $n; $i++){

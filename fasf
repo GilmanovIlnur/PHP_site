@@ -1,0 +1,47 @@
+[33mcommit 1caae319946fec7d69d3ed5f82c4505f38d9a489[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Sat Nov 2 16:57:50 2019 +0300
+
+    Рефактор кода.
+
+[33mcommit 1df8303b50447a969aced2d761eb697d605b574c[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Fri Nov 1 21:01:15 2019 +0300
+
+    Решил задачу на ребусы, осталось рефакторить.
+
+[33mcommit b8bebd27831328055a2017ad9c086a6ffab1ae37[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Tue Oct 22 13:13:37 2019 +0300
+
+    Сортирует подмножества
+
+[33mcommit 2a4ddf4af8e2b8251544c5dfeb776efd8227b58c[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Mon Oct 21 23:30:40 2019 +0300
+
+    Добавил главную страницу сайта
+
+[33mcommit 4e4ae6eb7fea4eace26a60ba3d8474ecc1e82739[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Mon Oct 21 23:30:07 2019 +0300
+
+    Вынес стили в отдельный css файл.
+
+[33mcommit c2ab316b9d6ea26c50991a65e7a47aaa1da84d02[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Sun Oct 13 22:54:23 2019 +0300
+
+    Добавил проверку на валидность с помощью js
+
+[33mcommit ec2adb6bdfea41d9c9c655c8036c4755839ae9bb[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Fri Oct 11 13:58:24 2019 +0300
+
+    Исправил метод перевода в двоичную систему. выводит все подмножества без сортировки
+
+[33mcommit a0ffafebebe6d250f9d8a4300a3ad70a0c1bc64a[m
+Author: GilmanovIlnur <qazxsw777>
+Date:   Thu Oct 10 18:50:12 2019 +0300
+
+    тест

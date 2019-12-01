@@ -19,6 +19,10 @@ class MainPageContent implements IContent
         <div style="text-align: center; padding-top: 200px">
             <h3 style="color: #ff7c2b">Сайт, предназначенный для курса по PHP. </br> Можно найти кое-что полезное.</h3>
         </div>
+        <div>
+            <a href="registration.php">Регистрация</a>
+            <a href="#">Войти</a>
+        </div>
 HEADER;
     }
 }

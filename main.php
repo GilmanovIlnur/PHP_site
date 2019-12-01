@@ -32,6 +32,7 @@ class main
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="css/main.css">
+<meta charset="UTF-8">
 <script src="js/js.js"></script>
 <title>{$this->title1}</title>
 </head><body>
@@ -54,6 +55,7 @@ HEADER;
                         <li><a href="content.php">1000 простых чисел</a></li>
                         <li><a href="subsets.php">Подмножества</a></li>
                         <li><a href="Rebus.php">Ребусы</a></li>
+                         <li><a href="ParserCSV.php">Разбиение файла на страницы</a></li>
                     </ul>
                 </li>
             </ul>
