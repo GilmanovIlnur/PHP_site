@@ -22,7 +22,7 @@ class connection{
     }
 
     public static function getConnection(){
-        if (!self::$msi){
+        if (!self::$msi || self::$msi->close()){
             new connection();
         }
         return self::$msi;

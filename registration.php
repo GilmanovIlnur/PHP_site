@@ -1,5 +1,7 @@
 <?php
 include "connection.php";
+include "Model/User.php";
+include "DAO.php";
 print <<<HEADER
 <!DOCTYPE html>
 <html>
@@ -18,8 +20,9 @@ print <<<HEADER
     <fieldset id="inputs">
         <input id="username" type="text" name="login" placeholder="Логин" autofocus required>   
         <input id="password" type="password" name="password" placeholder="Пароль" required>
-        <input type="text" placeholder="Имя" autofocus required>
-        <input type="text" placeholder="Фамилия" autofocus required>
+        <input id="password" type="password" name="repeatedPassword" placeholder="Повторите пароль" required>
+       <input type="text" placeholder="Имя" autofocus required name="name">
+        <input type="text" placeholder="Фамилия" autofocus required name="lastName">
     </fieldset>
     <fieldset id="actions">
         <input type="submit" id="submit" value="ВОЙТИ">
@@ -32,23 +35,17 @@ print <<<HEADER
 HEADER;
 getFields();
 function getFields(){
-
-        $login = $_POST["login"];
-        $password = $_POST["password"];
-        $msi = Connection::getConnection();
-        //$msi->close();
-        $sql1 = "CREATE TABLE test(id INT)";
-        $sql = <<<TAG
-INSERT INTO usr(login, password, first_name, last_name) 
-            VALUES 
-                ('login1', 'password1', 'Ильнур', 'Гильманов');
-TAG;
-
-        $res = $msi->query($sql);
-        print ($res == true ? 1: 0);
-        print($login);
-        print($password);
-
+        if (isset($_POST["login"])){
+            $user = new User();
+            $user->setUsername($_POST["login"]);
+            $user->setPassword($_POST["password"]);
+            $user->setRepeatedPassword($_POST["repeatedPassword"]);
+            $user->setName($_POST["name"]);
+            $user->setLastName($_POST["lastName"]);
+            $dao = new DAO();
+            $res = $dao->registrate($user);
+            print ($res == true ? 1: 0);
+        }
 
 }
 
